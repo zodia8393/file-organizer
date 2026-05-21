@@ -1,5 +1,7 @@
 # organizer
 
+![CI](https://github.com/zodia8393/file-organizer/actions/workflows/ci.yml/badge.svg)
+
 Directory file organization automation tool with safety-first design.
 
 ## Quick Start
