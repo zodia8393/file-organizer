@@ -1,0 +1,149 @@
+# Default file organization rules
+# Rules are evaluated top-to-bottom, first match wins.
+# Unmatched files are NEVER moved.
+#
+# Placeholders in destination:
+#   {year}   — file mtime year (e.g. 2026)
+#   {month}  — file mtime month zero-padded (e.g. 05)
+#   {day}    — file mtime day zero-padded (e.g. 21)
+
+settings:
+  # Directories to scan (absolute paths)
+  scopes:
+    - "~/Downloads"
+    - "~/Desktop"
+
+  # Max recursion depth (0 = top-level only)
+  max_depth: 3
+
+  # Don't touch files modified within this many minutes
+  cooldown_minutes: 30
+
+  # Max files per single batch run
+  batch_limit: 5000
+
+  # Directories to always skip (substring match on path components)
+  exclude_dirs:
+    - ".git"
+    - "node_modules"
+    - "venv"
+    - ".venv"
+    - "__pycache__"
+    - ".cache"
+    - ".Trash"
+    - ".trash"
+    - "Library"
+    - ".local"
+    - ".config"
+    - "Dropbox"
+    - "Google Drive"
+    - "OneDrive"
+    - "iCloud"
+
+  # Log retention in days
+  log_retention_days: 30
+
+rules:
+  # --- Images ---
+  - name: "Screenshots"
+    match:
+      name_regex: "^(Screenshot|스크린샷|화면.*캡처|Capture)"
+    destination: "Images/Screenshots/{year}-{month}/"
+
+  - name: "Photos"
+    match:
+      extensions: [".jpg", ".jpeg", ".heic", ".raw", ".cr2", ".nef", ".dng"]
+    destination: "Images/Photos/{year}/"
+
+  - name: "Graphics"
+    match:
+      extensions: [".png", ".gif", ".bmp", ".svg", ".webp", ".ico", ".tiff"]
+    destination: "Images/Graphics/"
+
+  # --- Documents ---
+  - name: "PDF Documents"
+    match:
+      extensions: [".pdf"]
+    destination: "Documents/PDF/{year}/"
+
+  - name: "Office Documents"
+    match:
+      extensions: [".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".hwp", ".hwpx", ".odt", ".ods", ".odp"]
+    destination: "Documents/Office/{year}/"
+
+  - name: "Text Files"
+    match:
+      extensions: [".txt", ".md", ".rst", ".rtf", ".csv", ".tsv"]
+    destination: "Documents/Text/"
+
+  # --- Archives ---
+  - name: "Archives"
+    match:
+      extensions: [".zip", ".tar", ".tar.gz", ".tgz", ".rar", ".7z", ".bz2", ".xz", ".gz"]
+    destination: "Archives/{year}/"
+
+  # --- Installers ---
+  - name: "Linux Packages"
+    match:
+      extensions: [".deb", ".rpm", ".AppImage", ".snap", ".flatpak"]
+    destination: "Installers/"
+
+  - name: "Disk Images"
+    match:
+      extensions: [".iso", ".img", ".dmg"]
+    destination: "Installers/DiskImages/"
+
+  # --- Media ---
+  - name: "Videos"
+    match:
+      extensions: [".mp4", ".mkv", ".avi", ".mov", ".wmv", ".flv", ".webm", ".m4v"]
+    destination: "Media/Video/"
+
+  - name: "Audio"
+    match:
+      extensions: [".mp3", ".wav", ".flac", ".aac", ".ogg", ".m4a", ".wma"]
+    destination: "Media/Audio/"
+
+  # --- Code ---
+  - name: "Python Scripts"
+    match:
+      extensions: [".py", ".ipynb"]
+    destination: "Code/Python/"
+
+  - name: "Shell Scripts"
+    match:
+      extensions: [".sh", ".bash", ".zsh"]
+    destination: "Code/Shell/"
+
+  - name: "Web Files"
+    match:
+      extensions: [".html", ".css", ".js", ".ts", ".jsx", ".tsx", ".json"]
+    destination: "Code/Web/"
+
+  # --- Data ---
+  - name: "Databases"
+    match:
+      extensions: [".db", ".sqlite", ".sqlite3", ".sql"]
+    destination: "Data/"
+
+  - name: "Data Files"
+    match:
+      extensions: [".parquet", ".feather", ".arrow", ".hdf5", ".h5", ".npy", ".npz", ".pkl", ".pickle"]
+    destination: "Data/"
+
+  # --- Fonts ---
+  - name: "Fonts"
+    match:
+      extensions: [".ttf", ".otf", ".woff", ".woff2", ".eot"]
+    destination: "Fonts/"
+
+  # --- Temp/Cache (trash action) ---
+  - name: "Temp Files"
+    match:
+      name_regex: "^(Untitled|temp|tmp|~\\$|\\._)"
+    action: "trash"
+
+  - name: "macOS Junk"
+    match:
+      name_regex: "^\\.(DS_Store|Thumbs\\.db|desktop\\.ini)"
+    action: "trash"

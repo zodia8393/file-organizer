@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+.env
+.DS_Store
+.vscode/
+.idea/
+logs/
+*.log
+.claude-prompt.md

@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "organizer"
+version = "0.1.0"
+description = "Directory file organization automation tool with safety-first design"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+dependencies = [
+    "typer>=0.9",
+    "rich>=13.0",
+    "pyyaml>=6.0",
+    "send2trash>=1.8",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pyfakefs>=5.0",
+]
+
+[project.scripts]
+organizer = "organizer.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["organizer*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
